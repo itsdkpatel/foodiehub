@@ -1,4 +1,5 @@
 
+
 require("dotenv").config();
 
 const express = require("express");
@@ -9,11 +10,22 @@ const cookieParser = require("cookie-parser");
 const app = express();
 
 if (!process.env.JWT_SECRET) {
-  throw new Error("JWT_SECRET .env file mein set karo.");
+  throw new Error("JWT_SECRET environment variable missing.");
 }
 
+// Frontend URLs
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  "http://127.0.0.1:5500"
+].filter(Boolean);
+
 app.use(cors({
-  origin: "http://127.0.0.1:5500",
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error("Not allowed by CORS"));
+  },
   credentials: true
 }));
 
@@ -27,36 +39,61 @@ app.get("/", (req, res) => {
   });
 });
 
-// Authentication route
-app.use("/api/auth", require("./routes/auth"));
+// MongoDB connection
+let dbConnectionPromise;
 
-// Order route
-app.use("/api/orders", require("./routes/order"));
-
-app.use("/api/admin", require("./routes/admin"));
-
-// Start server
-async function startServer() {
+async function connectDB(req, res, next) {
   try {
-    await mongoose.connect(
+    const mongoURI =
       process.env.MONGODB_URI ||
-      "mongodb://127.0.0.1:27017/foodiehub"
-    );
+      (process.env.VERCEL
+        ? null
+        : "mongodb://127.0.0.1:27017/foodiehub");
 
-    console.log("MongoDB connected successfully!");
+    if (!mongoURI) {
+      return res.status(500).json({
+        message: "MONGODB_URI is not configured."
+      });
+    }
 
-    const port = process.env.PORT || 5000;
+    if (mongoose.connection.readyState === 1) {
+      return next();
+    }
 
-    app.listen(port, () => {
-      console.log(`Server running at http://localhost:${port}`);
-    });
+    if (!dbConnectionPromise) {
+      dbConnectionPromise = mongoose.connect(mongoURI).catch(error => {
+        dbConnectionPromise = null;
+        throw error;
+      });
+    }
 
-module.exports =app;
+    await dbConnectionPromise;
+    next();
 
   } catch (error) {
-    console.error("Server startup failed:", error.message);
-    process.exit(1);
+    console.error("MongoDB connection error:", error.message);
+
+    res.status(500).json({
+      message: "Database connection failed."
+    });
   }
 }
 
-startServer();
+// API routes
+app.use("/api", connectDB);
+
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/orders", require("./routes/order"));
+app.use("/api/admin", require("./routes/admin"));
+
+// Export Express app for Vercel
+module.exports = app;
+
+// Local development only
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+
+  app.listen(PORT, () => {
+    console.log(`Server running at http://127.0.0.1:${PORT}`);
+  });
+}
