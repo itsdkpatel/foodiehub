@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodieHub | Admin Dashboard</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <h2>Foodie<span>Hub</span> Admin</h2>
+    <div>
+      <a href="index.html">View Website</a>
+      <button id="refreshButton">Refresh</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="welcome">
+      <h1>Admin Dashboard</h1>
+      <p>Manage your FoodieHub customer orders.</p>
+      <p id="message">Checking admin access...</p>
+    </section>
+
+    <section class="stats">
+      <div class="stat-card">
+        <p>Total Orders</p>
+        <h2 id="totalOrders">0</h2>
+      </div>
+
+      <div class="stat-card">
+        <p>Pending Orders</p>
+        <h2 id="pendingOrders">0</h2>
+      </div>
+
+      <div class="stat-card">
+        <p>Preparing</p>
+        <h2 id="preparingOrders">0</h2>
+      </div>
+
+      <div class="stat-card">
+        <p>Delivered</p>
+        <h2 id="deliveredOrders">0</h2>
+      </div>
+    </section>
+
+    <section class="orders-section">
+      <h2>Customer Orders</h2>
+      <div id="ordersList">
+        Loading orders...
+      </div>
+    </section>
+
+  </main>
+
+  <script src="admin.js"></script>
+</body>
+</html>

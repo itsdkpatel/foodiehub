@@ -1,0 +1,2847 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#21120c">
+  <meta name="description" content="FoodieHub — discover delicious food, explore restaurants and order your favourites.">
+  <title>FoodieHub | Discover Good Food</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --red: #bf421f;
+      --red-light: #d34d27;
+      --gold: #efa638;
+      --cream: #fff9f0;
+      --ink: #24160f;
+      --muted: #806b5b;
+      --line: #ead9c5;
+      --white: #ffffff;
+      --green: #18794e;
+      --shadow: 0 15px 40px rgba(40, 20, 10, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
+
+    body {
+      font-family: "DM Sans", sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:focus-visible, a:focus-visible, input:focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 3px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1320px, calc(100% - 48px));
+      margin-inline: auto;
+    }
+
+    /* NAVBAR */
+
+    .navbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 20;
+      color: white;
+      border-bottom: 1px solid rgba(255,255,255,.14);
+    }
+
+    .nav-inner {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font: 800 24px "Playfair Display", Georgia, serif;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--cream);
+      color: var(--red);
+      border: 3px solid rgba(255,255,255,.65);
+      font-size: 23px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 34px;
+    }
+
+    .nav-links a {
+      font-size: 15px;
+      font-weight: 700;
+      transition: color .2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cart-button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: none;
+      border-radius: 999px;
+      padding: 10px 13px 10px 18px;
+      color: white;
+      background: var(--red);
+      font-weight: 800;
+    }
+
+    .cart-count {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .profile-button, .menu-button {
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 50%;
+      color: white;
+      background: rgba(255,255,255,.12);
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+    }
+
+    .menu-button {
+      display: none;
+    }
+
+    /* HERO */
+
+    .hero {
+      min-height: 780px;
+      min-height: min(900px, 100svh);
+      position: relative;
+      isolation: isolate;
+      display: flex;
+      align-items: center;
+      padding: 130px 0 70px;
+      color: white;
+      background: #39251a;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2200&q=90")
+        center 55% / cover no-repeat;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(90deg, rgba(29,16,10,.82) 0%, rgba(29,16,10,.53) 54%, rgba(29,16,10,.26) 100%),
+        linear-gradient(0deg, rgba(29,16,10,.8), transparent 48%);
+    }
+
+    .hero-content {
+      width: 100%;
+      max-width: 920px;
+    }
+
+    .location-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(255,255,255,.65);
+      border-radius: 999px;
+      background: rgba(30,18,12,.38);
+      padding: 12px 18px;
+      margin-bottom: 28px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .location-dot {
+      width: 9px;
+      height: 9px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+
+    .hero h1 {
+      font: 900 clamp(70px, 10vw, 150px)/.87 "Playfair Display", Georgia, serif;
+      letter-spacing: -5px;
+      margin-bottom: 30px;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .hero-description {
+      max-width: 520px;
+      color: #f0ded0;
+      font-size: 17px;
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      max-width: 750px;
+      width: 100%;
+      min-height: 72px;
+      padding: 8px;
+      background: #fff9f2;
+      color: var(--red);
+      border-radius: 999px;
+      box-shadow: 0 10px 30px #0002;
+    }
+
+    .search-icon {
+      font-size: 24px;
+      margin-left: 16px;
+    }
+
+    .search-box input {
+      width: 100%;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      color: var(--ink);
+      background: transparent;
+      font-size: 16px;
+    }
+
+    .search-box input::placeholder {
+      color: #806b5b;
+    }
+
+    .primary-button {
+      flex-shrink: 0;
+      border: none;
+      border-radius: 999px;
+      background: var(--red);
+      color: white;
+      font-weight: 800;
+      padding: 17px 30px;
+      transition: background .2s, transform .2s;
+    }
+
+    .primary-button:hover {
+      background: var(--red-light);
+      transform: translateY(-1px);
+    }
+
+    /* FOOD CARDS */
+
+    .food-discovery {
+      background: var(--cream);
+      padding: 80px 0;
+    }
+
+    .food-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 30px;
+    }
+
+    .eyebrow {
+      color: var(--red);
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .food-heading h2, .stats-heading h2 {
+      font: 900 clamp(35px, 5vw, 58px)/1.12 "Playfair Display", Georgia, serif;
+    }
+
+    .food-heading h2 em, .stats-heading h2 em {
+      color: var(--gold);
+    }
+
+    .section-description {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-top: 12px;
+    }
+
+    .food-categories {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 4px 2px 20px;
+      margin-bottom: 10px;
+      scrollbar-width: thin;
+    }
+
+    .food-category {
+      flex-shrink: 0;
+      border: 1px solid var(--line);
+      background: white;
+      color: #39261b;
+      padding: 12px 21px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: .2s;
+    }
+
+    .food-category:hover, .food-category.active {
+      background: var(--red);
+      border-color: var(--red);
+      color: white;
+    }
+
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .food-card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 25px;
+      background: white;
+      transition: transform .25s, box-shadow .25s;
+    }
+
+    .food-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .food-card[hidden] {
+      display: none;
+    }
+
+    .food-image-wrap {
+      height: 215px;
+      position: relative;
+      overflow: hidden;
+      background: #e8d7c4;
+    }
+
+    .food-image {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform .4s;
+    }
+
+    .food-card:hover .food-image {
+      transform: scale(1.06);
+    }
+
+    .food-time, .food-rating {
+      position: absolute;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .food-time {
+      top: 13px;
+      left: 13px;
+      background: var(--cream);
+      color: var(--ink);
+    }
+
+    .food-rating {
+      bottom: 13px;
+      right: 13px;
+      color: white;
+      background: var(--green);
+    }
+
+    .food-card-body {
+      padding: 18px;
+    }
+
+    .food-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 8px;
+    }
+
+    .food-title {
+      font: 800 19px/1.3 "Playfair Display", Georgia, serif;
+    }
+
+    .food-price {
+      color: var(--red);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .food-restaurant {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      margin-top: 7px;
+    }
+
+    .food-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 14px;
+      min-height: 30px;
+    }
+
+    .food-tag {
+      background: #f3e7d4;
+      color: #493322;
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .food-card-bottom {
+      border-top: 1px solid var(--line);
+      margin-top: 16px;
+      padding-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .food-distance {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .add-food-btn {
+      border: 0;
+      border-radius: 999px;
+      background: var(--red);
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 10px 14px;
+      white-space: nowrap;
+      transition: background .2s;
+    }
+
+    .add-food-btn:hover {
+      background: #963116;
+    }
+
+    .food-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 45px 20px;
+      color: var(--muted);
+    }
+
+    /* STATISTICS */
+
+    .stats-section {
+      padding: 85px 0;
+      background: #21120c;
+      color: white;
+    }
+
+    .stats-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 30px;
+      margin-bottom: 45px;
+    }
+
+    .stats-heading h2 em {
+      display: block;
+    }
+
+    .stats-heading p {
+      max-width: 350px;
+      color: #c8b4a4;
+      line-height: 1.7;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .stat-card {
+      min-height: 230px;
+      padding: 30px;
+      border-radius: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 35px;
+    }
+
+    .stat-card.red {
+      background: linear-gradient(135deg, #b83b1e, #c95425);
+      color: white;
+    }
+
+    .stat-card.gold {
+      background: var(--gold);
+      color: var(--ink);
+    }
+
+    .stat-card.dark {
+      background: #38241a;
+      border: 1px solid #604536;
+      color: white;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .stat-number {
+      font: 900 clamp(50px, 7vw, 85px)/1 "Playfair Display", Georgia, serif;
+    }
+
+    .stat-caption {
+      font-size: 13px;
+      opacity: .8;
+      margin-top: 8px;
+    }
+
+    /* FOOTER */
+
+    .footer {
+      padding: 55px 0 25px;
+      background: #180d08;
+      color: #f9eee4;
+    }
+
+    .footer-top {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 35px;
+      padding-bottom: 35px;
+    }
+
+    .footer-brand p {
+      max-width: 300px;
+      color: #b9a394;
+      line-height: 1.8;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      color: #d8c5b5;
+      font-size: 14px;
+    }
+
+    .footer-links a:hover {
+      color: var(--gold);
+    }
+
+    .footer-bottom {
+      padding-top: 22px;
+      border-top: 1px solid #493126;
+      color: #b9a394;
+      font-size: 13px;
+    }
+
+    /* CART DRAWER */
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: rgba(20, 10, 5, .6);
+      opacity: 0;
+      visibility: hidden;
+      transition: .25s;
+    }
+
+    .overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .cart-drawer {
+      position: fixed;
+      z-index: 51;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: min(440px, 100%);
+      background: var(--cream);
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform .3s ease;
+    }
+
+    .cart-drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .drawer-header h2 {
+      font: 800 27px "Playfair Display", Georgia, serif;
+    }
+
+    .close-button {
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--ink);
+      border-radius: 50%;
+      font-size: 22px;
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 15px 0;
+    }
+
+    .cart-empty {
+      color: var(--muted);
+      text-align: center;
+      padding: 45px 10px;
+      line-height: 1.7;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .cart-item-name {
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .cart-item-price {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quantity-controls button {
+      width: 29px;
+      height: 29px;
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 50%;
+      color: var(--red);
+      font-weight: 800;
+    }
+
+    .cart-footer {
+      border-top: 1px solid var(--line);
+      padding-top: 20px;
+    }
+
+    .cart-total-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 17px;
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    .checkout-button {
+      width: 100%;
+    }
+
+    /* LOGIN MODAL */
+
+    .login-modal {
+      position: fixed;
+      z-index: 61;
+      top: 50%;
+      left: 50%;
+      width: min(420px, calc(100% - 32px));
+      padding: 30px;
+      background: var(--cream);
+      border-radius: 25px;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      visibility: hidden;
+      transform: translate(-50%, -46%);
+      transition: .25s;
+    }
+
+    .login-modal.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -50%);
+    }
+
+    .login-modal h2 {
+      font: 800 30px "Playfair Display", Georgia, serif;
+      margin-bottom: 8px;
+    }
+
+    .login-modal p {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+      margin-bottom: 22px;
+    }
+
+    .login-form label {
+      display: block;
+      margin: 15px 0 7px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .login-form input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 13px;
+      background: white;
+      color: var(--ink);
+    }
+
+    .login-form .primary-button {
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .login-message {
+      font-size: 13px;
+      color: var(--green);
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 17px;
+      right: 17px;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 1050px) {
+      .food-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .hero h1 {
+        font-size: clamp(75px, 11vw, 120px);
+      }
+    }
+
+    @media (max-width: 760px) {
+      .container {
+        width: min(100% - 32px, 600px);
+      }
+
+      .nav-inner {
+        min-height: 72px;
+        gap: 12px;
+      }
+
+      .brand {
+        font-size: 20px;
+        gap: 8px;
+      }
+
+      .brand-mark {
+        width: 38px;
+        height: 38px;
+        font-size: 20px;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 72px;
+        left: 0;
+        width: 100%;
+        padding: 22px 24px;
+        background: #21120c;
+        flex-direction: column;
+        align-items: start;
+        gap: 22px;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .menu-button {
+        display: grid;
+      }
+
+      .profile-button {
+        display: none;
+      }
+
+      .cart-button {
+        padding: 8px 10px;
+        gap: 7px;
+      }
+
+      .hero {
+        min-height: 790px;
+        padding-top: 130px;
+      }
+
+      .hero h1 {
+        font-size: clamp(64px, 13vw, 95px);
+        letter-spacing: -3px;
+      }
+
+      .hero-description {
+        font-size: 15px;
+      }
+
+      .search-box {
+        min-height: 62px;
+        gap: 8px;
+      }
+
+      .search-icon {
+        margin-left: 10px;
+      }
+
+      .search-box input {
+        font-size: 13px;
+      }
+
+      .search-box .primary-button {
+        padding: 14px 18px;
+        font-size: 13px;
+      }
+
+      .food-discovery {
+        padding: 55px 0;
+      }
+
+      .food-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 13px;
+      }
+
+      .food-image-wrap {
+        height: 155px;
+      }
+
+      .food-card {
+        border-radius: 18px;
+      }
+
+      .food-card-body {
+        padding: 12px;
+      }
+
+      .food-title {
+        font-size: 16px;
+      }
+
+      .food-price {
+        font-size: 13px;
+      }
+
+      .food-restaurant {
+        font-size: 11px;
+      }
+
+      .food-tag {
+        font-size: 10px;
+        padding: 6px 8px;
+      }
+
+      .food-card-bottom {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .add-food-btn {
+        width: 100%;
+      }
+
+      .stats-section {
+        padding: 60px 0;
+      }
+
+      .stats-heading {
+        align-items: start;
+        flex-direction: column;
+        margin-bottom: 28px;
+      }
+
+      .stats-grid {
+        gap: 12px;
+      }
+
+      .stat-card {
+        min-height: 175px;
+        padding: 20px;
+        border-radius: 22px;
+      }
+
+      .stat-label {
+        font-size: 10px;
+      }
+
+      .stat-number {
+        font-size: clamp(36px, 8vw, 60px);
+      }
+
+      .footer-top {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .brand {
+        font-size: 17px;
+      }
+
+      .nav-actions {
+        gap: 7px;
+      }
+
+      .cart-button {
+        font-size: 12px;
+      }
+
+      .hero h1 {
+        font-size: 61px;
+      }
+
+      .location-pill {
+        font-size: 11px;
+        padding: 10px 13px;
+      }
+
+      .search-box .primary-button {
+        padding: 13px;
+      }
+
+      .food-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .food-image-wrap {
+        height: 220px;
+      }
+
+      .food-card-bottom {
+        align-items: center;
+        flex-direction: row;
+      }
+
+      .add-food-btn {
+        width: auto;
+      }
+
+      .stat-card {
+        padding: 14px;
+      }
+
+      .stat-number {
+        font-size: 32px;
+      }
+    }
+
+
+    
+
+
+
+
+    .navbar,
+.topbar,
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+
+    /* Blackish transparent background */
+    background: rgba(15, 10, 8, 0.92);
+
+    /* Glass effect */
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    /* Subtle bottom border */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+    box-sizing: border-box;
+}
+
+/* Prevent content from hiding behind navbar */
+body {
+    padding-top: 82px;
+}
+
+/* Navbar links */
+.navbar a,
+.topbar a,
+header a {
+    color: #fff;
+}
+
+/* Smooth background transition */
+.navbar,
+.topbar,
+header {
+    transition: background 0.3s ease;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    body {
+        padding-top: 72px;
+    }
+
+    .navbar,
+    .topbar,
+    header {
+        padding: 12px 16px;
+    }
+}
+
+
+
+/* Profile button name alignment fix */
+#profileButton {
+    width: auto !important;
+    min-width: 110px;
+    max-width: 190px;
+    height: 46px;
+    padding: 0 16px;
+    border-radius: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    flex-shrink: 0;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+/* Navbar spacing fix */
+.navbar,
+.navbar .nav-actions {
+    gap: 12px;
+}
+
+
+
+
+/* FoodieHub Login Button */
+#profileButton {
+    background: linear-gradient(135deg, #e84b24, #c93616);
+    color: #ffffff;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 25px;
+    min-width: 120px;
+    height: 46px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+
+    box-shadow: 0 4px 12px rgba(220, 65, 30, 0.25);
+    transition: all 0.3s ease;
+}
+
+#profileButton:hover {
+    background: linear-gradient(135deg, #ff6038, #df3c19);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(220, 65, 30, 0.35);
+}
+
+
+
+
+.checkout-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.checkout-overlay[hidden] {
+  display: none;
+}
+
+.checkout-box {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #fffaf2;
+  padding: 30px;
+  border-radius: 22px;
+  color: #241b18;
+}
+
+.checkout-box h2 {
+  margin: 0 0 8px;
+  font-size: 25px;
+}
+
+.checkout-box label {
+  display: block;
+  margin-top: 16px;
+  margin-bottom: 7px;
+  font-weight: 600;
+}
+
+.checkout-box input,
+.checkout-box textarea {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #ddd0c0;
+  border-radius: 10px;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+.checkout-box textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.checkout-payment {
+  margin-top: 18px;
+  padding: 14px;
+  background: #f2e5d5;
+  border-radius: 12px;
+}
+
+.checkout-payment p {
+  margin-bottom: 0;
+}
+
+#checkoutTotal {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+#placeOrderButton {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 30px;
+  background: #df4723;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#placeOrderButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.checkout-close {
+  position: absolute;
+  top: 12px;
+  right: 17px;
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+#checkoutMessage {
+  margin-bottom: 0;
+  font-weight: 600;
+}
+
+/* my orders */
+/* FLOATING MY ORDERS BUTTON */
+
+.my-orders-floating {
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  z-index: 9998;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 14px 22px;
+  background: #e23744;
+  color: #fff;
+
+  border: none;
+  border-radius: 50px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.22);
+
+  transition: 0.3s ease;
+}
+
+.my-orders-floating:hover {
+  background: #c92332;
+  transform: translateY(-4px);
+}
+
+@media (max-width: 600px) {
+  .my-orders-floating {
+    bottom: 18px;
+    left: 15px;
+    padding: 12px 17px;
+  }
+}
+
+/* MY ORDERS SECTION */
+
+#myOrdersSection {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #fff;
+  border-radius: 15px;
+}
+
+#myOrdersSection[hidden] {
+  display: none;
+}
+
+.my-orders-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.my-orders-header button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#myOrdersList {
+  display: grid;
+  gap: 18px;
+}
+
+.customer-order-card {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 20px;
+  background: #fff;
+}
+
+.customer-order-card p {
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+.customer-order-status {
+  display: inline-block;
+  padding: 7px 12px;
+  border-radius: 20px;
+  background: #fff3df;
+  color: #a65c00;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.customer-order-progress {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0;
+}
+
+.customer-order-step {
+  padding: 9px 12px;
+  border-radius: 8px;
+  background: #eee;
+  color: #777;
+  font-size: 12px;
+}
+
+.customer-order-step.active {
+  background: #dcfce7;
+  color: #15803d;
+  font-weight: bold;
+}
+
+.customer-map-button {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 11px 18px;
+  border-radius: 8px;
+  background: #e23744;
+  color: white;
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  #myOrdersSection {
+    margin: 20px 10px;
+    padding: 15px;
+  }
+}
+
+
+.cancel-order-button {
+  margin-top: 15px;
+  padding: 11px 20px;
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cancel-order-button:hover {
+  background: #b91c1c;
+}
+  </style>
+
+
+
+</head>
+<body>
+  <!-- my orders -->
+<button type="button" id="myOrdersButton" class="my-orders-floating">
+  <span>📦</span> My Orders
+</button>
+
+<section id="myOrdersSection" hidden>
+  <h2>My Orders</h2>
+
+  <button type="button" id="refreshMyOrders">
+    Refresh Orders
+  </button>
+
+  <button type="button" id="closeMyOrders">
+    Close
+  </button>
+
+  <div id="myOrdersList">
+    Loading orders...
+  </div>
+</section>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="#home" aria-label="FoodieHub home">
+        <span class="brand-mark">♨</span>
+        <span>FoodieHub</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#food-menu">Restaurants</a>
+        <a href="#food-menu">Cuisines</a>
+        <a href="#statistics">Fees</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="profile-button" id="profileButton" aria-label="Open login">♙ Login</button>
+        <button class="cart-button" id="cartButton" aria-label="Open shopping cart">
+          <span>♧</span>
+          <span>Cart</span>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <button class="menu-button" id="menuButton" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO / FIRST PAGE -->
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="hero-content">
+          <div class="location-pill">
+            <span class="location-dot"></span>
+            <span>India · Delicious food near you</span>
+          </div>
+
+          <h1>Dinner,<span>in 28<br>minutes.</span></h1>
+
+          <p class="hero-description">
+            Discover your next favourite meal. Explore great restaurants,
+            delicious cuisines, and delivery prices before you order.
+          </p>
+
+          <form class="search-box" id="searchForm">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <input
+              type="search"
+              id="foodSearch"
+              placeholder="Search dishes, cuisines or restaurants"
+              aria-label="Search dishes, cuisines or restaurants"
+            >
+            <button class="primary-button" type="submit">Find food</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOD DISCOVERY / 16 CARDS -->
+    <section class="food-discovery" id="food-menu">
+      <div class="container">
+        <div class="food-heading">
+          <div>
+            <p class="eyebrow">Your next favourite meal</p>
+            <h2>What are you <em>craving?</em></h2>
+            <p class="section-description">
+              Explore popular dishes, fresh flavours, and delicious bites.
+            </p>
+          </div>
+        </div>
+
+        <div class="food-categories" id="foodCategories">
+          <button class="food-category active" data-category="All" type="button">All food</button>
+          <button class="food-category" data-category="Pizza" type="button">🍕 Pizza</button>
+          <button class="food-category" data-category="Burger" type="button">🍔 Burger</button>
+          <button class="food-category" data-category="Snacks" type="button">🍟 Snacks</button>
+          <button class="food-category" data-category="Biryani" type="button">🍛 Biryani</button>
+          <button class="food-category" data-category="Chinese" type="button">🍜 Chinese</button>
+          <button class="food-category" data-category="Desserts" type="button">🍰 Desserts</button>
+          <button class="food-category" data-category="Drinks" type="button">🥤 Drinks</button>
+        </div>
+
+        <div class="food-grid" id="foodGrid">
+
+          <article class="food-card" data-category="Pizza" data-name="Margherita Pizza" data-price="249">
+            <div class="food-image-wrap">
+              <img class="food-image" src="https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=700&q=80" alt="Margherita pizza" loading="lazy">
+              <span class="food-time">20–30 min</span><span class="food-rating">4.8 ★</span>
+            </div>
+            <div class="food-card-body">
+              <div class="food-title-row"><h3 class="food-title">Margherita Pizza</h3><span class="food-price">₹249</span></div>
+              <p class="food-restaurant">Italian Kitchen · Classic cheese</p>
+              <div class="food-tags"><span class="food-tag">Vegetarian</span><span class="food-tag">Bestseller</span></div>
+              <div class="food-card-bottom"><span class="food-distance">1.2 mi away</span><button class="add-food-btn" type="button">+ Add</button></div>
+            </div>
+          </article>
+
+          <article class="food-card" data-category="Burger" data-name="Classic Cheeseburger" data-price="199">
+            <div class="food-image-wrap">
+              <img class="food-image" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=80" alt="Classic cheeseburger" loading="lazy">
+              <span class="food-time">15–25 min</span><span class="food-rating">4.7 ★</span>
+            </div>
+            <div class="food-card-body">
+              <div class="food-title-row"><h3 class="food-title">Classic Cheeseburger</h3><span class="food-price">₹199</span></div>
+              <p class="food-restaurant">Burger House · American</p>
+              <div class="food-tags"><span class="food-tag">Cheesy</span><span class="food-tag">Popular</span></div>
+              <div class="food-card-bottom"><span class="food-distance">0.8 mi away</span><button class="add-food-btn" type="button">+ Add</button></div>
+            </div>
+          </article>
+
+          <article class="food-card" data-category="Snacks" data-name="Crispy French Fries" data-price="99">
+            <div class="food-image-wrap">
+              <img class="food-image" src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=700&q=80" alt="Crispy French fries" loading="lazy">
+              <span class="food-time">10–20 min</span><span class="food-rating">4.6 ★</span>
+            </div>
+            <div class="food-card-body">
+              <div class="food-title-row"><h3 class="food-title">Crispy French Fries</h3><span class="food-price">₹99</span></div>
+              <p class="food-restaurant">Snack Station · Golden & crispy</p>
+              <div class="food-tags"><span class="food-tag">Quick bite</span><span class="food-tag">Crispy</span></div>
+              <div class="food-card-bottom"><span class="food-distance">0.6 mi away</span><button class="add-food-btn" type="button">+ Add</button></div>
+            </div>
+          </article>
+
+          <article class="food-card" data-category="Biryani" data-name="Chicken Dum Biryani" data-price="279">
+            <div class="food-image-wrap">
+              <img class="food-image" src="https://images.unsplash.com/photo-1714611626323-5ba6204453be?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D" alt="Chicken dum biryani" loading="lazy">
+              <span class="food-time">25–35 min</span><span class="food-rating">4.9 ★</span>
+            </div>
+            <div class="food-card-body">
+              <div class="food-title-row"><h3 class="food-title">Chicken Dum Biryani</h3><span class="food-price">₹279</span></div>
+              <p class="food-restaurant">Royal Biryani · Hyderabadi</p>
+              <div class="food-tags"><span class="food-tag">Spicy</span><span class="food-tag">Bestseller</span></div>
+              <div class="food-card-bottom"><span class="food-distance">1.4 mi away</span><button class="add-food-btn" type="button">+ Add</button></div>
+            </div>
+          </article>
+
+          <article class="food-card" data-category="Chinese" data-name="Veg Hakka Noodles" data-price="169">
+            <div class="food-image-wrap">
+              <img class="food-image" src="https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=700&q=80" alt="Hakka noodles" loading="lazy">
+              <span class="food-time">20–30 min</span><span class="food-rating">4.5 ★</span>
+            </div>
+            <div class="food-card-body">
+              <div class="food-title-row"><h3 class="food-title">Veg Hakka Noodles</h3><span class="food-price">₹169</span></div>
+              <p class="food-restaurant">Wok Express · Indo-Chinese</p>
+              <div class="food-tags"><span class="food-tag">Vegetarian</span><span class="food-tag">Wok tossed</span></div>
+              <div class="food-card-bottom"><span class="food-distance">1.1 mi away</span><button class="add-food-btn" type="button">+ Add</button></div>
+            </div>
+          </article>
+
+          <article class="food-card" data-category="Desserts" data-name="Chocolate Brownie" data-price="129">
+            <div class="food-image-wrap">
+              <img class="food-image" src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=700&q=80" alt="Chocolate brownie" loading="lazy">
+              <span class="food-time">15–25 min</span><span class="food-rating">4.8 ★</span>
+            </div>
+            <div class="food-card-body">
+              <div class="food-title-row"><h3 class="food-title">Chocolate Brownie</h3><span class="food-price">₹129</span></div>
+              <p class="food-restaurant">Sweet Treats · Chocolate heaven</p>
+              <div class="food-tags"><span class="food-tag">Dessert</span><span class="food-tag">Chocolate</span></div>
+              <div class="food-card-bottom"><span class="food-distance">0.9 mi away</span><button class="add-food-btn" type="button">+ Add</button></div>
+            </div>
+          </article>
+
+          <article class="food-card" data-category="Snacks" data-name="Crispy Samosa" data-price="49">
+            <div class="food-image-wrap">
+              <img class="food-image" src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=700&q=80" alt="Indian samosas" loading="lazy">
+              <span class="food-time">10–20 min</span><span class="food-rating">4.6 ★</span>
+            </div>
+            <div class="food-card-body">
+              <div class="food-title-row"><h3 class="food-title">Crispy Samosa</h3><span class="food-price">₹49</span></div>
+              <p class="food-restaurant">Desi Snacks · Indian street food</p>
+              <div class="food-tags"><span class="food-tag">Vegetarian</span><span class="food-tag">Tea-time</span></div>
+              <div class="food-card-bottom"><span class="food-distance">0.5 mi away</span><button class="add-food-btn" type="button">+ Add</button></div>
+            </div>
+          </article>
+
+          <article class="food-card" data-category="Pizza" data-name="Farmhouse Pizza" data-price="299">
+            <div class="food-image-wrap">
+              <img class="food-image" src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=700&q=80" alt="Farmhouse pizza" loading="lazy">
+              <span class="food-time">25–35 min</span><span class="food-rating">4.7 ★</span>
+            </div>
+            <div class="food-card-body">
+              <div class="food-title-row"><h3 class="food-title">Farmhouse Pizza</h3><span class="food-price">₹299</span></div>
+              <p class="food-restaurant">Pizza Corner · Fresh vegetables</p>
+              <div class="food-tags"><span class="food-tag">Vegetarian</span><span class="food-tag">Loaded</span></div>
+              <div class="food-card-bottom"><span class="food-distance">1.6 mi away</span><button class="add-food-btn" type="button">+ Add</button></div>
+            </div>
+          </article>
+
+          <article class="food-card" data-category="Burger" data-name="Crispy Chicken Burger" data-price="229">
+            <div class="food-image-wrap">
+              <img class="food-image" src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=700&q=80" alt="Crispy chicken burger" loading="lazy">
+              <span class="food-time">20–30 min</span><span class="food-rating">4.7 ★</span>
+            </div>
+            <div class="food-card-body">
+              <div class="food-title-row"><h3 class="food-title">Crispy Chicken Burger</h3><span class="food-price">₹229</span></div>
+              <p class="food-restaurant">Burger House · Crispy chicken</p>
+              <div class="food-tags"><span class="food-tag">Crunchy</span><span class="food-tag">Favourite</span></div>
+              <div class="food-card-bottom"><span class="food-distance">1.0 mi away</span><button class="add-food-btn" type="button">+ Add</button></div>
+            </div>
+          </article>
+
+          <article class="food-card" data-category="Snacks" data-name="Crispy Onion Rings" data-price="119">
+            <div class="food-image-wrap">
+              <img class="food-image" src="https://images.unsplash.com/photo-1639024471283-03518883512d?auto=format&fit=crop&w=700&q=80" alt="Crispy fried snack" loading="lazy">
+              <span class="food-time">15–20 min</span><span class="food-rating">4.4 ★</span>
+            </div>
+            <div class="food-card-body">
+              <div class="food-title-row"><h3 class="food-title">Crispy Onion Rings</h3><span class="food-price">₹119</span></div>
+              <p class="food-restaurant">Snack Station · Crunchy bites</p>
+              <div class="food-tags"><span class="food-tag">Crispy</span><span class="food-tag">Sharing</span></div>
+              <div class="food-card-bottom"><span class="food-distance">0.7 mi away</span><button class="add-food-btn" type="button">+ Add</button></div>
+            </div>
+          </article>
+
+          <article class="food-card" data-category="Biryani" data-name="Paneer Biryani" data-price="219">
+            <div class="food-image-wrap">
+              <img class="food-image" src="https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=700&q=80" alt="Paneer biryani" loading="lazy">
+              <span class="food-time">25–35 min</span><span class="food-rating">4.6 ★</span>
+            </div>
+            <div class="food-card-body">
+              <div class="food-title-row"><h3 class="food-title">Paneer Biryani</h3><span class="food-price">₹219</span></div>
+              <p class="food-restaurant">Royal Biryani · Aromatic rice</p>
+              <div class="food-tags"><span class="food-tag">Vegetarian</span><span class="food-tag">Spiced</span></div>
+              <div class="food-card-bottom"><span class="food-distance">1.3 mi away</span><button class="add-food-btn" type="button">+ Add</button></div>
+            </div>
+          </article>
+
+          <article class="food-card" data-category="Chinese" data-name="Veg Spring Rolls" data-price="149">
+            <div class="food-image-wrap">
+              <img class="food-image" src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=80" alt="Crispy appetisers" loading="lazy">
+              <span class="food-time">15–25 min</span><span class="food-rating">4.5 ★</span>
+            </div>
+            <div class="food-card-body">
+              <div class="food-title-row"><h3 class="food-title">Veg Spring Rolls</h3><span class="food-price">₹149</span></div>
+              <p class="food-restaurant">Wok Express · Crispy rolls</p>
+              <div class="food-tags"><span class="food-tag">Vegetarian</span><span class="food-tag">Starter</span></div>
+              <div class="food-card-bottom"><span class="food-distance">1.2 mi away</span><button class="add-food-btn" type="button">+ Add</button></div>
+            </div>
+          </article>
+
+          <article class="food-card" data-category="Desserts" data-name="Strawberry Cheesecake" data-price="179">
+            <div class="food-image-wrap">
+              <img class="food-image" src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=700&q=80" alt="Cheesecake dessert" loading="lazy">
+              <span class="food-time">20–30 min</span><span class="food-rating">4.9 ★</span>
+            </div>
+            <div class="food-card-body">
+              <div class="food-title-row"><h3 class="food-title">Strawberry Cheesecake</h3><span class="food-price">₹179</span></div>
+              <p class="food-restaurant">Sweet Treats · Creamy dessert</p>
+              <div class="food-tags"><span class="food-tag">Sweet</span><span class="food-tag">Premium</span></div>
+              <div class="food-card-bottom"><span class="food-distance">1.1 mi away</span><button class="add-food-btn" type="button">+ Add</button></div>
+            </div>
+          </article>
+
+          <article class="food-card" data-category="Drinks" data-name="Mango Smoothie" data-price="119">
+            <div class="food-image-wrap">
+              <img class="food-image" src="https://images.unsplash.com/photo-1505252585461-04db1eb84625?auto=format&fit=crop&w=700&q=80" alt="Fresh fruit smoothie" loading="lazy">
+              <span class="food-time">10–15 min</span><span class="food-rating">4.7 ★</span>
+            </div>
+            <div class="food-card-body">
+              <div class="food-title-row"><h3 class="food-title">Mango Smoothie</h3><span class="food-price">₹119</span></div>
+              <p class="food-restaurant">Fresh Sips · Fruity & refreshing</p>
+              <div class="food-tags"><span class="food-tag">Cold drink</span><span class="food-tag">Fresh</span></div>
+              <div class="food-card-bottom"><span class="food-distance">0.6 mi away</span><button class="add-food-btn" type="button">+ Add</button></div>
+            </div>
+          </article>
+
+          <article class="food-card" data-category="Snacks" data-name="Loaded Nachos" data-price="189">
+            <div class="food-image-wrap">
+              <img class="food-image" src="https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?auto=format&fit=crop&w=700&q=80" alt="Loaded snack platter" loading="lazy">
+              <span class="food-time">15–25 min</span><span class="food-rating">4.6 ★</span>
+            </div>
+            <div class="food-card-body">
+              <div class="food-title-row"><h3 class="food-title">Loaded Nachos</h3><span class="food-price">₹189</span></div>
+              <p class="food-restaurant">Snack Station · Cheesy Mexican bites</p>
+              <div class="food-tags"><span class="food-tag">Cheesy</span><span class="food-tag">Sharing</span></div>
+              <div class="food-card-bottom"><span class="food-distance">0.9 mi away</span><button class="add-food-btn" type="button">+ Add</button></div>
+            </div>
+          </article>
+
+          <article class="food-card" data-category="Burger" data-name="Veg Supreme Burger" data-price="159">
+            <div class="food-image-wrap">
+              <img class="food-image" src="https://images.unsplash.com/photo-1550317138-10000687a72b?auto=format&fit=crop&w=700&q=80" alt="Vegetarian burger" loading="lazy">
+              <span class="food-time">15–25 min</span><span class="food-rating">4.5 ★</span>
+            </div>
+            <div class="food-card-body">
+              <div class="food-title-row"><h3 class="food-title">Veg Supreme Burger</h3><span class="food-price">₹159</span></div>
+              <p class="food-restaurant">Burger House · Veggie delight</p>
+              <div class="food-tags"><span class="food-tag">Vegetarian</span><span class="food-tag">Filling</span></div>
+              <div class="food-card-bottom"><span class="food-distance">0.8 mi away</span><button class="add-food-btn" type="button">+ Add</button></div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- STATISTICS / SECOND PAGE DESIGN -->
+    <section class="stats-section" id="statistics">
+      <div class="container">
+        <div class="stats-heading">
+          <div>
+            <p class="eyebrow">The FoodieHub difference</p>
+            <h2>Last night in India,<em>by the numbers.</em></h2>
+          </div>
+          <p>Sample platform statistics for the past 24 hours. Replace these demo figures with your real data.</p>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card red">
+            <p class="stat-label">Median delivery time</p>
+            <div>
+              <div class="stat-number">28 min</div>
+              <p class="stat-caption">From restaurant to your door</p>
+            </div>
+          </article>
+
+          <article class="stat-card gold">
+            <p class="stat-label">Orders delivered</p>
+            <div>
+              <div class="stat-number">12,480</div>
+              <p class="stat-caption">Meals delivered in the last 24 hours</p>
+            </div>
+          </article>
+
+          <article class="stat-card dark">
+            <p class="stat-label">Partner restaurants</p>
+            <div>
+              <div class="stat-number">418</div>
+              <p class="stat-caption">Local kitchens and food makers</p>
+            </div>
+          </article>
+
+          <article class="stat-card dark">
+            <p class="stat-label">Customer satisfaction</p>
+            <div>
+              <div class="stat-number">4.9/5</div>
+              <p class="stat-caption">A demo rating for the design</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="brand" href="#home">
+            <span class="brand-mark">♨</span>
+            <span>FoodieHub</span>
+          </a>
+          <p>Good food brings people together. Discover your next favourite meal with FoodieHub.</p>
+        </div>
+
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="#home">Home</a>
+          <a href="#food-menu">Explore food</a>
+          <a href="#statistics">About us</a>
+          <a href="mailto:hello@example.com">Contact</a>
+        </nav>
+      </div>
+
+      <div class="footer-bottom">
+        © <span id="currentYear"></span> FoodieHub. Made with ♥ for food lovers.
+      </div>
+    </div>
+  </footer>
+
+  <!-- CART OVERLAY AND DRAWER -->
+  <div class="overlay" id="cartOverlay"></div>
+
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping cart" aria-hidden="true">
+    <div class="drawer-header">
+      <h2>Your basket</h2>
+      <button class="close-button" id="closeCart" type="button" aria-label="Close cart">×</button>
+    </div>
+
+    <div class="cart-items" id="cartItems">
+      <p class="cart-empty">Your basket is empty.<br>Let's find something delicious!</p>
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Total</span>
+        <span id="cartTotal">₹0</span>
+      </div>
+      <button class="primary-button checkout-button" id="checkoutButton" type="button">Continue to checkout</button>
+    </div>
+  </aside>
+
+  <!-- LOGIN MODAL -->
+  
+<!-- LOGIN / REGISTER MODAL -->
+<div class="overlay" id="loginOverlay"></div>
+
+<section class="login-modal" id="loginModal"
+  role="dialog" aria-modal="true">
+
+  <button class="close-button modal-close"
+    id="closeLogin" type="button">×</button>
+
+  <h2 id="loginTitle">Welcome to FoodieHub</h2>
+  <p id="authDescription">Login to continue your food journey.</p>
+
+  <form class="login-form" id="loginForm">
+
+    <div id="nameField" hidden>
+      <label for="registerName">Full Name</label>
+      <input id="registerName" type="text"
+        placeholder="Enter your name"
+        minlength="2" maxlength="60">
+    </div>
+
+    <label for="loginEmail">Email address</label>
+    <input id="loginEmail" name="email"
+      type="email" placeholder="you@example.com"
+      autocomplete="email" required>
+
+    <label for="loginPassword">Password</label>
+    <input id="loginPassword" name="password"
+      type="password" placeholder="Enter password"
+      minlength="8" maxlength="72" required>
+
+    <button class="primary-button" id="authSubmit"
+      type="submit">Sign in</button>
+
+    <div class="login-message" id="loginMessage"
+      role="status" aria-live="polite"></div>
+
+    <p style="margin-top:18px;text-align:center">
+      <span id="authSwitchText">Don't have an account?</span>
+      <button type="button" id="authSwitch"
+        style="border:0;background:none;color:#bf421f;font-weight:800;cursor:pointer">
+        Register
+      </button>
+    </p>
+
+  </form>
+</section>
+
+<!-- FOODIEHUB CHECKOUT MODAL -->
+<div id="checkoutModal" class="checkout-overlay" hidden>
+  <div class="checkout-box">
+
+    <button type="button" id="closeCheckout" class="checkout-close">
+      &times;
+    </button>
+
+    <h2>Complete Your Order</h2>
+    <p>Enter your delivery details below.</p>
+
+    <form id="checkoutForm">
+
+      <label for="customerName">Full Name</label>
+      <input
+        type="text"
+        id="customerName"
+        required
+        minlength="2"
+        maxlength="60"
+        placeholder="Enter your name"
+      >
+
+      <label for="customerPhone">Mobile Number</label>
+      <input
+        type="tel"
+        id="customerPhone"
+        required
+        pattern="[0-9]{10}"
+        maxlength="10"
+        placeholder="10-digit mobile number"
+      >
+
+      <label for="customerAddress">Delivery Address</label>
+      <textarea
+        id="customerAddress"
+        required
+        minlength="10"
+        maxlength="500"
+        placeholder="House no., street, city, pincode"
+      ></textarea>
+
+      <div class="checkout-payment">
+        <strong>Payment Method</strong>
+        <p>Cash on Delivery (COD)</p>
+      </div>
+
+      <p id="checkoutTotal"></p>
+
+      <button type="submit" id="placeOrderButton">
+        Place Order
+      </button>
+
+      <p id="checkoutMessage" role="status"></p>
+
+    </form>
+  </div>
+</div>
+
+
+
+
+  <script>
+    // FOODIEHUB INTERACTIONS
+
+    const categoryButtons = document.querySelectorAll(".food-category");
+    const foodCards = document.querySelectorAll(".food-card");
+    const foodGrid = document.getElementById("foodGrid");
+    const searchInput = document.getElementById("foodSearch");
+    const searchForm = document.getElementById("searchForm");
+
+    let selectedCategory = "All";
+    const cart = [];
+
+    // Category filter + search
+    function filterFood() {
+      const query = searchInput.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      foodCards.forEach(card => {
+        const matchesCategory =
+          selectedCategory === "All" ||
+          card.dataset.category === selectedCategory;
+
+        const searchableText = [
+          card.dataset.name,
+          card.dataset.category,
+          card.querySelector(".food-restaurant")?.textContent || "",
+          card.querySelector(".food-tags")?.textContent || ""
+        ].join(" ").toLowerCase();
+
+        const matchesSearch = searchableText.includes(query);
+        const visible = matchesCategory && matchesSearch;
+
+        card.hidden = !visible;
+
+        if (visible) visibleCount++;
+      });
+
+      let emptyMessage = foodGrid.querySelector(".food-empty");
+
+      if (visibleCount === 0) {
+        if (!emptyMessage) {
+          emptyMessage = document.createElement("p");
+          emptyMessage.className = "food-empty";
+          foodGrid.appendChild(emptyMessage);
+        }
+
+        emptyMessage.textContent = "No matching dishes found. Try another search or category.";
+      } else if (emptyMessage) {
+        emptyMessage.remove();
+      }
+    }
+
+    categoryButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        selectedCategory = button.dataset.category;
+
+        categoryButtons.forEach(item => {
+          const active = item === button;
+          item.classList.toggle("active", active);
+          item.setAttribute("aria-pressed", String(active));
+        });
+
+        filterFood();
+      });
+
+      button.setAttribute(
+        "aria-pressed",
+        String(button.dataset.category === "All")
+      );
+    });
+
+    searchInput.addEventListener("input", filterFood);
+
+    searchForm.addEventListener("submit", event => {
+      event.preventDefault();
+      document.getElementById("food-menu").scrollIntoView({ behavior: "smooth" });
+      filterFood();
+    });
+
+    // Cart functions
+    const cartButton = document.getElementById("cartButton");
+    const cartCount = document.getElementById("cartCount");
+    const cartOverlay = document.getElementById("cartOverlay");
+    const cartDrawer = document.getElementById("cartDrawer");
+    const closeCartButton = document.getElementById("closeCart");
+    const cartItemsElement = document.getElementById("cartItems");
+    const cartTotalElement = document.getElementById("cartTotal");
+    const checkoutButton = document.getElementById("checkoutButton");
+
+    function formatPrice(price) {
+      return "₹" + price.toLocaleString("en-IN");
+    }
+
+    function addToCart(foodId, name, price) {
+  const existingItem = cart.find(item => item.foodId === foodId);
+
+  if (existingItem) {
+    existingItem.quantity++;
+  } else {
+    cart.push({
+      foodId,
+      name,
+      price,
+      quantity: 1
+    });
+  }
+
+  renderCart();
+}
+
+    function changeQuantity(name, amount) {
+      const item = cart.find(entry => entry.name === name);
+
+      if (!item) return;
+
+      item.quantity += amount;
+
+      if (item.quantity <= 0) {
+        const index = cart.findIndex(entry => entry.name === name);
+        cart.splice(index, 1);
+      }
+
+      renderCart();
+    }
+
+    function renderCart() {
+      const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+      cartCount.textContent = totalQuantity;
+      cartTotalElement.textContent = formatPrice(totalPrice);
+      cartItemsElement.replaceChildren();
+
+      if (cart.length === 0) {
+        const empty = document.createElement("p");
+        empty.className = "cart-empty";
+        empty.innerHTML = "Your basket is empty.<br>Let's find something delicious!";
+        cartItemsElement.appendChild(empty);
+        return;
+      }
+
+      cart.forEach(item => {
+        const row = document.createElement("div");
+        row.className = "cart-item";
+
+        const details = document.createElement("div");
+
+        const name = document.createElement("p");
+        name.className = "cart-item-name";
+        name.textContent = item.name;
+
+        const price = document.createElement("p");
+        price.className = "cart-item-price";
+        price.textContent = formatPrice(item.price) + " each";
+
+        details.append(name, price);
+
+        const controls = document.createElement("div");
+        controls.className = "quantity-controls";
+
+        const minus = document.createElement("button");
+        minus.type = "button";
+        minus.textContent = "−";
+        minus.setAttribute("aria-label", "Remove one " + item.name);
+        minus.addEventListener("click", () => changeQuantity(item.name, -1));
+
+        const quantity = document.createElement("span");
+        quantity.textContent = item.quantity;
+
+        const plus = document.createElement("button");
+        plus.type = "button";
+        plus.textContent = "+";
+        plus.setAttribute("aria-label", "Add one " + item.name);
+        plus.addEventListener("click", () => changeQuantity(item.name, 1));
+
+        controls.append(minus, quantity, plus);
+        row.append(details, controls);
+        cartItemsElement.appendChild(row);
+      });
+    }
+
+    function openCart() {
+      cartOverlay.classList.add("open");
+      cartDrawer.classList.add("open");
+      cartDrawer.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      closeCartButton.focus();
+    }
+
+    function closeCart() {
+      cartOverlay.classList.remove("open");
+      cartDrawer.classList.remove("open");
+      cartDrawer.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      cartButton.focus();
+    }
+
+    document.querySelectorAll(".add-food-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        const card = button.closest(".food-card");
+       const foodId = Array.from(foodCards).indexOf(card) + 1;
+
+addToCart(
+  foodId,
+  card.dataset.name,
+  Number(card.dataset.price)
+);
+
+        const originalText = button.textContent;
+        button.textContent = "✓ Added";
+
+        window.setTimeout(() => {
+          button.textContent = originalText;
+        }, 900);
+      });
+    });
+
+    cartButton.addEventListener("click", openCart);
+    closeCartButton.addEventListener("click", closeCart);
+    cartOverlay.addEventListener("click", closeCart);
+
+    // Demo checkout: no payment or order is processed.
+    
+
+// =====================================
+// FOODIEHUB CHECKOUT SYSTEM
+// =====================================
+
+const checkoutModal = document.getElementById("checkoutModal");
+const checkoutForm = document.getElementById("checkoutForm");
+const closeCheckoutButton = document.getElementById("closeCheckout");
+const placeOrderButton = document.getElementById("placeOrderButton");
+const checkoutMessage = document.getElementById("checkoutMessage");
+const checkoutTotal = document.getElementById("checkoutTotal");
+
+function openCheckout() {
+  if (cart.length === 0) {
+    alert("Your cart is empty. Please add food first.");
+    return;
+  }
+
+  if (!currentUser) {
+    closeCart();
+    openLogin();
+    loginMessage.textContent = "Please login before placing your order.";
+    loginMessage.style.color = "#dc2626";
+    return;
+  }
+
+  closeCart();
+
+  checkoutTotal.textContent =
+    "Total Amount: " +
+    formatPrice(
+      cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+    );
+
+  document.getElementById("customerName").value =
+    currentUser.name || "";
+
+  checkoutMessage.textContent = "";
+  checkoutModal.hidden = false;
+  document.body.style.overflow = "hidden";
+}
+
+function closeCheckoutModal() {
+  checkoutModal.hidden = true;
+  document.body.style.overflow = "";
+}
+
+checkoutButton.addEventListener("click", openCheckout);
+
+closeCheckoutButton.addEventListener(
+  "click",
+  closeCheckoutModal
+);
+
+// Close when clicking outside checkout box
+checkoutModal.addEventListener("click", event => {
+  if (event.target === checkoutModal) {
+    closeCheckoutModal();
+  }
+});
+
+// Place order
+checkoutForm.addEventListener("submit", async event => {
+  event.preventDefault();
+
+  if (!currentUser) {
+    checkoutMessage.textContent = "Please login first.";
+    return;
+  }
+
+  if (cart.length === 0) {
+    checkoutMessage.textContent = "Your cart is empty.";
+    return;
+  }
+
+  const customerName =
+    document.getElementById("customerName").value.trim();
+
+  const phone =
+    document.getElementById("customerPhone").value.trim();
+
+  const address =
+    document.getElementById("customerAddress").value.trim();
+
+  const orderData = {
+    customerName,
+    phone,
+    address,
+    items: cart.map(item => ({
+      foodId: item.foodId,
+      quantity: item.quantity
+    }))
+  };
+
+  placeOrderButton.disabled = true;
+  placeOrderButton.textContent = "Placing Order...";
+  checkoutMessage.style.color = "#18794e";
+  checkoutMessage.textContent = "Please wait...";
+
+  try {
+    const response = await fetch(API_URL + "/orders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include",
+      body: JSON.stringify(orderData)
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || "Order could not be placed.");
+    }
+
+    checkoutMessage.textContent =
+      "Order placed successfully!";
+
+    // Clear cart after successful order
+    cart.length = 0;
+    renderCart();
+
+    checkoutForm.reset();
+
+    setTimeout(() => {
+      closeCheckoutModal();
+
+      alert(
+        "Your order has been placed successfully!\n" +
+        "Order ID: " + result.order.id + "\n" +
+        "Payment: Cash on Delivery"
+      );
+
+      checkoutMessage.textContent = "";
+    }, 700);
+
+  } catch (error) {
+    checkoutMessage.style.color = "#dc2626";
+    checkoutMessage.textContent = error.message;
+
+  } finally {
+    placeOrderButton.disabled = false;
+    placeOrderButton.textContent = "Place Order";
+  }
+});
+
+
+
+
+    // Login modal
+    const profileButton = document.getElementById("profileButton");
+    const loginModal = document.getElementById("loginModal");
+    const loginOverlay = document.getElementById("loginOverlay");
+    const closeLoginButton = document.getElementById("closeLogin");
+    const loginForm = document.getElementById("loginForm");
+    const loginMessage = document.getElementById("loginMessage");
+
+    function openLogin() {
+      loginOverlay.classList.add("open");
+      loginModal.classList.add("open");
+      document.body.style.overflow = "hidden";
+      document.getElementById("loginEmail").focus();
+    }
+
+    function closeLogin() {
+      loginOverlay.classList.remove("open");
+      loginModal.classList.remove("open");
+      document.body.style.overflow = "";
+      profileButton.focus();
+    }
+
+    // profileButton.addEventListener("click", openLogin);
+    closeLoginButton.addEventListener("click", closeLogin);
+    loginOverlay.addEventListener("click", closeLogin);
+
+
+
+
+    // Profile button action
+profileButton.addEventListener("click", () => {
+    if (currentUser) {
+        if (confirm("Do you want to logout?")) {
+            logoutUser();
+        }
+    } else {
+        openLogin();
+    }
+});
+    
+// =====================================
+// FOODIEHUB BACKEND AUTHENTICATION
+// =====================================
+
+// const API_URL = "http://localhost:5000/api";
+const API_URL = "http://127.0.0.1:5000/api";
+
+let authMode = "login";
+let currentUser = null;
+
+const nameField = document.getElementById("nameField");
+const registerName = document.getElementById("registerName");
+
+const authSwitch = document.getElementById("authSwitch");
+const authSwitchText = document.getElementById("authSwitchText");
+const authSubmit = document.getElementById("authSubmit");
+
+const loginTitle = document.getElementById("loginTitle");
+const authDescription = document.getElementById("authDescription");
+
+// Switch between Login and Registration
+authSwitch.addEventListener("click", () => {
+
+    authMode = authMode === "login" ? "register" : "login";
+
+    const registering = authMode === "register";
+
+    nameField.hidden = !registering;
+    registerName.required = registering;
+
+    loginTitle.textContent = registering
+        ? "Create Your Account"
+        : "Welcome to FoodieHub";
+
+    authDescription.textContent = registering
+        ? "Register to discover delicious food."
+        : "Login to continue your food journey.";
+
+    authSubmit.textContent = registering
+        ? "Create Account"
+        : "Sign in";
+
+    authSwitchText.textContent = registering
+        ? "Already have an account?"
+        : "Don't have an account?";
+
+    authSwitch.textContent = registering
+        ? "Login"
+        : "Register";
+
+    loginMessage.textContent = "";
+    loginForm.reset();
+});
+
+// Registration and Login
+loginForm.addEventListener("submit", async (event) => {
+
+    event.preventDefault();
+
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
+
+    const userData = {
+        email,
+        password
+    };
+
+    if (authMode === "register") {
+        userData.name = registerName.value.trim();
+    }
+
+    const endpoint = authMode === "register"
+        ? "/auth/register"
+        : "/auth/login";
+
+    authSubmit.disabled = true;
+    authSubmit.textContent = "Please wait...";
+    loginMessage.textContent = "";
+
+    try {
+
+        const response = await fetch(API_URL + endpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+            body: JSON.stringify(userData)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.message || "Authentication failed.");
+        }
+
+        currentUser = result.user;
+
+        loginMessage.textContent = result.message;
+
+        updateUserInterface();
+
+        setTimeout(() => {
+            closeLogin();
+            loginForm.reset();
+            loginMessage.textContent = "";
+        }, 1000);
+
+    } catch (error) {
+
+        loginMessage.textContent = error.message;
+        loginMessage.style.color = "#dc2626";
+
+    } finally {
+
+        authSubmit.disabled = false;
+        authSubmit.textContent =
+            authMode === "register" ? "Create Account" : "Sign in";
+    }
+});
+
+// Update profile button
+function updateUserInterface() {
+
+    if (currentUser) {
+        profileButton.textContent = "Hi, " + currentUser.name;
+        profileButton.setAttribute(
+            "aria-label",
+            "Logged in as " + currentUser.name
+        );
+    } else {
+        profileButton.textContent = "♙ Login";
+        profileButton.setAttribute("aria-label", "Open login");
+    }
+}
+
+// Check existing login session
+async function checkBackend() {
+
+    try {
+
+        const response = await fetch(API_URL + "/auth/me", {
+            method: "GET",
+            credentials: "include"
+        });
+
+        if (!response.ok) {
+            currentUser = null;
+            updateUserInterface();
+            return;
+        }
+
+        const result = await response.json();
+
+        currentUser = result.user;
+        updateUserInterface();
+
+        console.log("User session restored:", currentUser);
+
+    } catch (error) {
+
+        console.error("Backend connection failed:", error);
+
+    }
+}
+
+// Logout
+async function logoutUser() {
+
+    try {
+
+        const response = await fetch(API_URL + "/auth/logout", {
+            method: "POST",
+            credentials: "include"
+        });
+
+        if (!response.ok) {
+            throw new Error("Logout failed.");
+        }
+
+        currentUser = null;
+        updateUserInterface();
+
+        alert("Logout successful!");
+
+    } catch (error) {
+
+        alert(error.message);
+
+    }
+}
+
+// Profile button action
+
+
+// Restore login session on page load
+checkBackend();
+
+
+    // Mobile navigation
+    const menuButton = document.getElementById("menuButton");
+    const navLinks = document.getElementById("navLinks");
+
+    menuButton.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuButton.setAttribute("aria-expanded", String(isOpen));
+      menuButton.textContent = isOpen ? "×" : "☰";
+    });
+
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuButton.setAttribute("aria-expanded", "false");
+        menuButton.textContent = "☰";
+      });
+    });
+
+    // Escape closes open overlays
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        if (cartDrawer.classList.contains("open")) closeCart();
+        if (loginModal.classList.contains("open")) closeLogin();
+        if (!checkoutModal.hidden) closeCheckoutModal();
+      }
+    });
+
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+    // Initial cart state
+    renderCart();
+
+    // newly added   
+
+    // const API_URL = "http://localhost:5000/api";
+
+
+
+// checkBackend();
+
+
+
+
+// =====================================
+// CUSTOMER MY ORDERS & TRACKING
+// =====================================
+
+const myOrdersSection =
+  document.getElementById("myOrdersSection");
+
+const myOrdersList =
+  document.getElementById("myOrdersList");
+
+const myOrdersButton =
+  document.getElementById("myOrdersButton");
+
+const closeMyOrders =
+  document.getElementById("closeMyOrders");
+
+const refreshMyOrders =
+  document.getElementById("refreshMyOrders");
+
+const customerOrderSteps = [
+  "Pending",
+  "Confirmed",
+  "Preparing",
+  "Out for Delivery",
+  "Delivered"
+];
+
+function escapeOrderHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+// Open My Orders
+myOrdersButton.addEventListener("click", () => {
+
+  if (!currentUser) {
+    openLogin();
+    loginMessage.textContent =
+      "Please login to view your orders.";
+    loginMessage.style.color = "#dc2626";
+    return;
+  }
+
+  myOrdersSection.hidden = false;
+
+  myOrdersSection.scrollIntoView({
+    behavior: "smooth"
+  });
+
+  loadCustomerOrders();
+});
+
+
+// Close My Orders
+closeMyOrders.addEventListener("click", () => {
+  myOrdersSection.hidden = true;
+});
+
+
+// Refresh orders
+refreshMyOrders.addEventListener("click", () => {
+  loadCustomerOrders();
+});
+
+
+// Fetch logged-in customer's orders
+async function loadCustomerOrders() {
+
+  myOrdersList.textContent = "Loading your orders...";
+
+  try {
+
+    const response = await fetch(
+      API_URL + "/orders/my-orders",
+      {
+        method: "GET",
+        credentials: "include"
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        result.message || "Unable to load orders."
+      );
+    }
+
+    const orders = result.orders;
+
+    if (!Array.isArray(orders) || orders.length === 0) {
+      myOrdersList.textContent =
+        "You have not placed any orders yet.";
+      return;
+    }
+
+    renderCustomerOrders(orders);
+
+  } catch (error) {
+
+    myOrdersList.textContent = error.message;
+
+  }
+}
+
+
+// Render customer orders
+
+function renderCustomerOrders(orders) {
+  myOrdersList.innerHTML = orders.map(order => {
+
+    const status = order.status || "Pending";
+    const currentStep = customerOrderSteps.indexOf(status);
+
+    const progressHTML = status === "Cancelled"
+      ? `<p class="customer-order-status">Cancelled</p>`
+      : customerOrderSteps.map((step, index) => `
+          <span class="customer-order-step ${
+            currentStep >= index ? "active" : ""
+          }">${step}</span>
+        `).join("");
+
+    const itemsHTML = (order.items || []).map(item => `
+      <p>${escapeOrderHTML(item.name)} × ${Number(item.quantity) || 0}</p>
+    `).join("");
+
+    const address = order.address || "";
+
+    const mapURL =
+      "https://www.google.com/maps/search/?api=1&query=" +
+      encodeURIComponent(address);
+
+    const orderDate = order.createdAt
+      ? new Date(order.createdAt).toLocaleString()
+      : "Unavailable";
+
+    const cancelButton =
+      ["Pending", "Confirmed"].includes(status)
+        ? `<button type="button"
+             class="cancel-order-button"
+             data-order-id="${escapeOrderHTML(order._id)}">
+             Cancel Order
+           </button>`
+        : "";
+
+    return `
+      <article class="customer-order-card">
+        <h3>Order #${escapeOrderHTML(order._id)}</h3>
+
+        <p><strong>Order Date:</strong> ${escapeOrderHTML(orderDate)}</p>
+
+        <p><strong>Status:</strong>
+          <span class="customer-order-status">${escapeOrderHTML(status)}</span>
+        </p>
+
+        <div class="customer-order-progress">
+          ${progressHTML}
+        </div>
+
+        <h4>Ordered Items</h4>
+        ${itemsHTML}
+
+        <p><strong>Total Amount:</strong>
+          ₹${Number(order.totalAmount || 0).toFixed(2)}
+        </p>
+
+        <p><strong>Delivery Address:</strong>
+          ${escapeOrderHTML(address)}
+        </p>
+
+        <a class="customer-map-button"
+          href="${mapURL}" target="_blank"
+          rel="noopener noreferrer">
+          View Delivery Address on Map
+        </a>
+
+        ${cancelButton}
+      </article>
+    `;
+  }).join("");
+
+  document.querySelectorAll(".cancel-order-button").forEach(button => {
+    button.addEventListener("click", () => {
+      cancelCustomerOrder(button.dataset.orderId);
+    });
+  });
+}
+
+async function cancelCustomerOrder(orderId) {
+  alert("Cancel button clicked!");
+
+const confirmed = confirm("Are you sure you want to cancel this order?");
+
+  if (!confirmed) return;
+
+  try {
+    const response = await fetch(
+      API_URL + "/orders/" + encodeURIComponent(orderId) + "/cancel",
+      {
+        method: "PATCH",
+        credentials: "include"
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || "Unable to cancel order.");
+    }
+
+    alert("Order cancelled successfully!");
+    loadCustomerOrders();
+
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+
+  </script>
+
+
+
+
+</body>
+</html>
